@@ -93,10 +93,10 @@ a_p <- 3
 
 p <- ggplot(data.frame(x = c(0.05, 1)), aes(x))
 
-jpeg('rplot.jpg')
+jpeg('rplot.jpg', height = 600, width = 800, units = 'px')
 print(p + 
-      labs(title=sprintf("Walzfräsen mit D=%d, z_w=%d, a_p=%d", D, z_w, a_p)) + 
-      xlab("a_e [mm]") + 
+      labs(title=bquote("Walzfräsen mit D="~.(D)~", "~z[w]~"="~.(z_w)~", "~a[p]~"="~.(a_p))) + 
+      xlab(expression(a[e]~"[mm]")) + 
       ylab("Mittlere Hauptschnittkraft pro Schneide [N]") + 
       stat_function(fun=schnittdaten, aes(color="S235", alpha="Schruppen"), geom="line", args=list( D = D, a_p = a_p, z_w = z_w, v_c = 200, f_z = 0.1, k_c1.1 = 1780, z = 0.17, lambda = lambda, gamma_tat = 0, gamma_0 = 6, print = FALSE)) + 
       stat_function(fun=schnittdaten, aes(color="S235", alpha="Schlichten"), geom="line", args=list( D = D, a_p = a_p, z_w = z_w, v_c = 200 * 1.2, f_z = 0.1 * 0.5, k_c1.1 = 1780, z = 0.17, lambda = lambda, gamma_tat = 0, gamma_0 = 6, print = FALSE)) + 
