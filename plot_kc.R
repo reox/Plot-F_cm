@@ -1,5 +1,6 @@
 library("ggplot2")
 
+# Funktionen aus Dietrich, Tschätsch "Praxis der Zerspanungstechnik" 11. Auflage 2014
 
 # Eingangsparameter
 # D         ... Fräserdurchmesser [mm]
@@ -37,19 +38,18 @@ schnittdaten <- function(D, a_p, a_e, z_w, v_c, f_z, k_c1.1, z, lambda, gamma_ta
     # Mittenspandicke
     h_m <- (360 / ( pi * phi_s )) * (a_e / D) * f_z * sin(((90-lambda)*pi)/180)
 
-
-    
     # Konstanten:
-    # Verschleiß (30%)
+    # Verschleiß (30%) - kann auch höher angenommen werden (1.5)
     K_ver <- 1.3
-    # Spanstauchung
+    # Spanstauchung, = 1.2 für Fräsen
     K_st <- 1.2
     # Spanwinkel
     K_gamma <- 1 - (( gamma_tat - gamma_0 ) / 100)
     # Schnittgeschwindigkeit (hier für Hartmetall, HSS = 1.2)
+    # Achtung: für v_c < 100m/min gelten da andere Formen! Für >100m/min eher vernachlässigbar
     K_v <- 1.0
 
-    # Daraus errechnet sich dann die spezifische Schnittkraft
+    # Daraus errechnet sich dann die spezifische Schnittkraft [N/mm^2]
     k_c = ((1^z) / (h_m^z)) * k_c1.1 * K_gamma * K_v * K_st * K_ver 
 
     if (print) print(sprintf("k_c = %0.2f [N/mm^2]", k_c))
@@ -62,7 +62,7 @@ schnittdaten <- function(D, a_p, a_e, z_w, v_c, f_z, k_c1.1, z, lambda, gamma_ta
     if (print) print(sprintf("F_cm = %0.2f [N]", F_cm))
 
     # Antriebsleistung der Maschine
-    # ny = 80%
+    # ny = 80% (Wirkungsgrad)
     P <- (F_cm * v_c * z_E) / (60 * 10^3 * 0.8)
     if (print) print(sprintf("P = %0.4f [kW]", P))
     if (print) print("===")
@@ -75,10 +75,12 @@ schnittdaten <- function(D, a_p, a_e, z_w, v_c, f_z, k_c1.1, z, lambda, gamma_ta
 # Drallwinkel 45 Grad, zwei schneiden
 
 # Stahl: v_c 200/240, f_z 0.1/0.05 (Schruppen/Schlichten)
+# Üblicher Spanwinkel von 0 Grad, 6 Grad Basis
 schnittdaten(3, 3, 0.25, 2, 200, 0.1, 1780, 0.17, 45, 0, 6)
 schnittdaten(3, 3, 0.25, 2, 240, 0.05, 1780, 0.17, 45, 0, 6)
 
 # Alu: v_c 300/360, f_z 0.06/0.03
+# Üblicher Spanwinkel von 10 Grad, 0 Grad Basis (??? Verifikation benötigt! ???)
 schnittdaten(3, 3, 0.25, 2, 300, 0.06, 700, 0.18, 45, 10, 0)
 schnittdaten(3, 3, 0.25, 2, 360, 0.03, 700, 0.18, 45, 10, 0)
 
