@@ -96,6 +96,7 @@ schnittdaten_stirnfraesen <- function(D, a_p, a_e, z_w, v_c, f_z, k_c1.1, z, lam
     # Dann ist phi_s = phi_e und B = a_e
     B <- a_e
     # Mhhh Ich glaube im Buch ist da eine Falsche Formel abgedruckt...
+    # nach nachfrage: ja die Formel ist im Buch falsch!
     # phi_s <- (acos( - ((2*B) / D) ) * 180) / pi
     # wäre die Formel im Buch, allerdings funktioniert die nur für B < D/2 - da ja sonst der acos nicht bestimmt ist.
     # Abgedruckt in dem dazugehörigen Bild ist aber explizit ein Winkel für B > D/2!
@@ -105,7 +106,7 @@ schnittdaten_stirnfraesen <- function(D, a_p, a_e, z_w, v_c, f_z, k_c1.1, z, lam
     #
     # Also entweder ich hab nen Fehler in der 11. Auflage gefunden oder ich rechne falsch :D
     # Diese Formel scheint richtiger zu sein
-    phi_s <- ((asin( (B - (D/2)) / (D/2)) * 180) / pi) + 90
+    phi_s <- ((acos( (-((2*B - D) / D))) * 180) / pi)
     print(sprintf("%f --> %f", B, phi_s))
 
     # Ideal ist D = 1.4 bis 1.6 * B
