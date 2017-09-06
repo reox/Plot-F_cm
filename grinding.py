@@ -78,6 +78,8 @@ def cylindrical_grinding(v_c, v_w, k_c11, z, d, a_e, D, b, ny, grit, external=Tr
     # resulting force
     F_m = F_cm * z_E
 
+    print("Resulting Force: {} N".format(F_m))
+
     # Power required:
     P = (F_m * v_c) / ny
 
@@ -97,7 +99,7 @@ v_w = 0.17  # m/s
 k_c11 = 2220.0  # N/mm^2
 z = 0.14  # 1
 # Diameter of the part
-d = 6.0  # mm
+d = 20.0  # mm
 
 # Process parameter:
 # For finishing passes
